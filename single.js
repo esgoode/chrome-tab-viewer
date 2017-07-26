@@ -1,18 +1,115 @@
+function init() {
+	var parent = document.querySelector('#most-visited');
+	var old = parent.querySelector('#mv-tiles');
+	var tiles = old.getElementsByClassName("mv-tile");
+	var numTiles = 0;
 
-alert("test");
+	chrome.tabs.query({}, function(all_tabs){
+		addTiles(all_tabs)
+	});
+	// addNewTiles();
 
-$(document).ready(function () {
-var tiles = document.getElementsByClassName("mv-tile");
-for(var i = 0; i < tiles.length; i++){
-var ex = tiles[i].querySelector(".mv-x");
-ex.addEventListener('click', function(ev) {
-    ev.preventDefault();
-    this.parentElement.remove();
-    //ev.stopPropagation();
-});
+	removeTileListener(tiles);
 }
-});
 
+var addTiles = function(all_tabs) {
+	//get TAB data
+	var tiles = document.querySelector('#mv-tiles');
+
+	for(var i = 0; i < all_tabs.length; i++){
+		var cTab = all_tabs[i];
+		var data = {
+			faviconUrl: cTab.faviconUrl,
+			id: cTab.id,
+			thumbnailUrl: "https://www.google.com/webpagethumbnail?c=63&d=" + 
+			 cTab.url + "&r=4&s=148:94&a=10t1w_p5AR3zjP5UpRo6EMlucOM",
+			tid: cTab.id,
+			title: cTab.title,
+			url: cTab.url
+		}
+		
+		tiles.append(renderTile(data));
+	}
+
+	//
+	//tiles.appendChild(renderTile(data));
+}
+
+var renderTile = function(data) {
+	var tile = document.createElement('a');
+
+	if (data == null) {
+		tile.className = 'mv-empty-tile';
+		return tile;
+	}
+
+	//append tile to end of all tiles
+	//var position = tiles.children.length;
+
+	tile.className = 'mv-tile';
+	tile.setAttribute('data-tid', data.tid);
+	var html = [];
+	html.push('<div class="mv-favicon"></div>');
+	html.push('<div class="mv-title"></div><div class="mv-thumb"></div>');
+	html.push('<div class="mv-x" role="button"></div>');
+	tile.innerHTML = html.join('');
+
+	//Set title
+	tile.setAttribute('aria-label', data.title);
+	tile.title = data.title;
+
+	//Set thumbnail image
+	var results = []
+	var thumb = tile.querySelector('.mv-thumb');
+	var img = document.createElement('img');
+	var loaded = false;
+
+	img.src = data.thumbnailUrl;
+
+	var favicon = tile.querySelector('.mv-favicon');
+	if (data.faviconUrl) {
+		var fi = document.createElement('img');
+		fi.src = data.faviconUrl;
+		// Set the title to empty
+		fi.title = '';
+		favicon.appendChild(fi);
+	} else {
+		favicon.classList.add('failed-favicon');
+	}
+
+	var mvx = tile.querySelector('.mv-x');
+	 
+	// var mvx = tile.querySelector('.mv-x');
+ //  	mvx.addEventListener('click', function(ev) {
+ //    tile.remove();
+ //    blacklistTile(tile);
+ //    ev.preventDefault();
+ //    ev.stopPropagation();
+
+ 	return tile;
+ }
+
+// //
+// var addNewTiles = function() {
+
+// }
+
+var removeTileListener = function(tiles) {
+
+	for(var i = 0; i < tiles.length; i++){
+		var ex = tiles[i].querySelector(".mv-x");
+		ex.addEventListener('click', function(ev) {
+		    ev.preventDefault();
+		    this.parentElement.remove();
+		    //get Tab and remove
+		});
+	}
+}
+
+
+
+//Kick things off
+document.addEventListener('DOMContentLoaded', init);
 
 // /* Copyright 2015 The Chromium Authors. All rights reserved.
 //  * Use of this source code is governed by a BSD-style license that can be
