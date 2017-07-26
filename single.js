@@ -7,9 +7,8 @@ function init() {
 	chrome.tabs.query({}, function(all_tabs){
 		addTiles(all_tabs)
 	});
-	// addNewTiles();
+	//updateTiles();
 
-	removeTileListener(tiles);
 }
 
 var addTiles = function(all_tabs) {
@@ -79,32 +78,28 @@ var renderTile = function(data) {
 
 	var mvx = tile.querySelector('.mv-x');
 	 
-	// var mvx = tile.querySelector('.mv-x');
- //  	mvx.addEventListener('click', function(ev) {
- //    tile.remove();
- //    blacklistTile(tile);
- //    ev.preventDefault();
- //    ev.stopPropagation();
+	var mvx = tile.querySelector('.mv-x');
+  	
+  	tile.addEventListener('click', function(){
+  		chrome.tabs.update(data.tid, {selected: true});
+	});
 
+  	mvx.addEventListener('click', function(ev) {
+	    chrome.tabs.remove(data.tid);
+	    tile.remove();
+	    blacklistTile(tile);
+	    ev.preventDefault();
+	    ev.stopPropagation();
+	});
+	
  	return tile;
  }
 
 // //
-// var addNewTiles = function() {
+// var updateTiles = function() {
 
 // }
 
-var removeTileListener = function(tiles) {
-
-	for(var i = 0; i < tiles.length; i++){
-		var ex = tiles[i].querySelector(".mv-x");
-		ex.addEventListener('click', function(ev) {
-		    ev.preventDefault();
-		    this.parentElement.remove();
-		    //get Tab and remove
-		});
-	}
-}
 
 
 
