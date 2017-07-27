@@ -6,7 +6,8 @@ body {
   -webkit-user-select: none;
   background: none transparent;
   color: #323232;
-  margin: 4px;
+  margin: 0;
+  overflow: hidden;
   padding: 0;
 }
 
@@ -32,8 +33,8 @@ a:visited {
 .mv-tiles-old {
   -webkit-user-select: none;
   font-size: 0;
-  height: calc(2 * (146px + 130px));
-  line-height: calc(146px);
+  height: calc(146px + 130px);
+  line-height: 146px;
   margin: 0;
   opacity: 0;
   position: absolute;
@@ -51,17 +52,16 @@ a:visited {
   display: inline-block;
   font-family: arial, sans-serif;
   font-size: 12px;
-  height: calc(2 * (130px - 2px));
+  height: calc(130px - 2px);
   line-height: 100%;
-  margin: 8px 8px;
+  margin: 0 8px;
   opacity: 1;
   outline: 0;
   overflow: hidden;
   position: relative;
   vertical-align: top;
   white-space: nowrap;
-  width: calc(2 * (156px - 2px));
-  border-radius: 5px;
+  width: calc(156px - 2px);
 }
 
 .mv-tile.hidden,
@@ -102,17 +102,17 @@ a:visited {
 
 .mv-title {
   -webkit-mask-image:
-    linear-gradient(to right, #000, #000, 200px, transparent);
+    linear-gradient(to right, #000, #000, 100px, transparent);
   border: none;
   height: 15px;
   left: 31px;
   line-height: 14px;
-  /*overflow: hidden;*/
+  overflow: hidden;
   padding: 0;
   position: absolute;
   text-overflow: clip;
   top: 8px;
-  width: 230px /*calc(156px - 32px - 4px);*/
+  width: calc(156px - 32px - 4px);
 }
 
 .mv-title.multiline {
@@ -145,14 +145,12 @@ html[dir=rtl] .mv-title[style*='direction: rtl'] {
   border-radius: 0;
   cursor: pointer;
   display: block;
-  height: calc(2.5 * 94px);
+  height: 94px;
   left: 3px;
-  right: 3px;
   overflow: hidden;
   position: absolute;
   top: 31px;
-  bottom: 3px;
-  width: calc(2 * (156px - 2px) -);
+  width: 148px;
 }
 
 .mv-thumb img {
@@ -195,8 +193,8 @@ html[dir=rtl] .mv-title[style*='direction: rtl'] {
  * div is actually just the gradient. */
 .mv-x::after {
   -webkit-mask-image: -webkit-image-set(
-      url(close_3_mask.png) 1x,
-      url(close_3_mask.png) 2x);
+      url(chrome-search://local-ntp/images/close_3_mask.png) 1x,
+      url(chrome-search://local-ntp/images/close_3_mask.png@2x) 2x);
   -webkit-mask-position: 12px 10px;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: 10px 10px;
@@ -269,3 +267,4 @@ html[dir=rtl] .mv-favicon {
 .mv-favicon.failed-favicon img {
   display: none;
 }
+
