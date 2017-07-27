@@ -9,3 +9,5 @@
 ---
 
 ![alt text](screen-shot.png)
+
+consider building sound and mute functionality

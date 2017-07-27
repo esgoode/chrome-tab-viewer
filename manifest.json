@@ -5,8 +5,12 @@
   "description": "This extension shows all your open tabs in a new tab",
   "version": "0.1",
 
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "http://*/*", "https://*/*", "<all_urls>", "activeTab", "background"],
   "chrome_url_overrides" : {
     "newtab": "single.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
   }
 }
