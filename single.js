@@ -10,7 +10,13 @@ function init() {
 	chrome.tabs.query({}, function(all_tabs){
 		addTiles(all_tabs)
 	});
+	
 	//updateTiles();
+	chrome.tabs.onCreated.addListener(function(tab){
+		var all_tabs = [tab];
+		addTiles(all_tabs);
+	});
+	//chrome.tabs.onRemoved.addListener(function callback)
 
 }
 
@@ -25,24 +31,13 @@ var addTiles = function(all_tabs) {
 			var data = {
 				faviconUrl: cTab.favIconUrl,
 				id: cTab.id,
-				thumbnailUrl: "https://www.google.com/webpagethumbnail?c=63&d=" + 
-				 cTab.url + "&r=4&s=148:94&a=10t1w_p5AR3zjP5UpRo6EMlucOM",
 				tid: cTab.id,
 				title: cTab.title,
 				url: cTab.url
 			}
-		
 			tiles.append(renderTile(data));
 		}
 	});
-	// chrome.runtime.getBackgroundPage(function (backgroundPage) {
-	// 	alert(backgroundPage.cow);
-	// });
-
-	
-
-	//
-	//tiles.appendChild(renderTile(data));
 }
 
 var renderTile = function(data) {
